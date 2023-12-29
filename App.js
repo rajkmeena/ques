@@ -1,20 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Button } from 'react-native-paper';
+import AddScreen from './AddScreen';
+import ViewScreen from './ViewScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Story App' }}
+        />
+        <Stack.Screen name="Add" component={AddScreen} />
+        <Stack.Screen name="View" component={ViewScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const HomeScreen = ({ navigation }) => {
+  return (
+    <React.Fragment>
+      <Button
+        mode="contained"
+        onPress={() => navigation.navigate('Add')}
+        style={{ margin: 20 }}
+      >
+        Add Story
+      </Button>
+      <Button
+        mode="contained"
+        onPress={() => navigation.navigate('View')}
+        style={{ margin: 20 }}
+      >
+        View Story
+      </Button>
+    </React.Fragment>
+  );
+};
+
+export default App;
